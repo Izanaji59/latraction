@@ -65,32 +65,80 @@ window.addEventListener('scroll', () => {
 
 // Form submission handler
 const contactForm = document.getElementById('contactForm');
+const submissionStatus = document.getElementById('submissionStatus');
+const exportButton = document.getElementById('exportSubmissions');
+
+function loadSubmissions() {
+    const stored = localStorage.getItem('contactSubmissions');
+    return stored ? JSON.parse(stored) : [];
+}
+
+function saveSubmission(entry) {
+    const submissions = loadSubmissions();
+    submissions.push(entry);
+    localStorage.setItem('contactSubmissions', JSON.stringify(submissions));
+}
+
+function setStatus(message, isError = false) {
+    if (!submissionStatus) return;
+    submissionStatus.textContent = message;
+    submissionStatus.style.color = isError ? 'var(--danger, #b00020)' : 'var(--primary-color)';
+}
+
+function exportSubmissionsToCSV() {
+    const submissions = loadSubmissions();
+    if (!submissions.length) {
+        setStatus('Aucune demande à exporter pour le moment.', true);
+        return;
+    }
+
+    const headers = ['Date', 'Nom', 'Email', 'Téléphone', 'Prestation', 'Message'];
+    const rows = submissions.map(({ date, name, email, phone, service, message }) => [
+        date,
+        name,
+        email,
+        phone || '',
+        service || '',
+        (message || '').replace(/\n/g, ' ')
+    ]);
+
+    const csvContent = [headers, ...rows]
+        .map(row => row
+            .map(field => `"${String(field).replace(/"/g, '""')}"`)
+            .join(','))
+        .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `latraction-demandes-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    setStatus('Export CSV généré depuis les demandes stockées localement.');
+}
 
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        
-        // Get form data
+
         const formData = new FormData(this);
         const data = Object.fromEntries(formData);
-        
-        // Here you would typically send the data to a server
-        // For now, we'll just show an alert
-        console.log('Form data:', data);
-        
-        // Show success message
-        alert('Merci pour votre demande ! Nous vous contacterons sous 24h.');
-        
-        // Reset form
+        const submission = {
+            ...data,
+            date: new Date().toLocaleString()
+        };
+
+        saveSubmission(submission);
+        console.log('Demande enregistrée localement:', submission);
+        setStatus('Demande enregistrée. Vous pouvez exporter le CSV pour votre classeur.');
         this.reset();
-        
-        // In a real implementation, you would:
-        // 1. Send data to your backend/email service
-        // 2. Show a proper success/error message
-        // 3. Optionally redirect or show a confirmation page
     });
 }
 
+if (exportButton) {
+    exportButton.addEventListener('click', exportSubmissionsToCSV);
+}
 // Intersection Observer for fade-in animations
 const observerOptions = {
     threshold: 0.1,
@@ -142,4 +190,5 @@ function updateActiveNavLink() {
 }
 
 window.addEventListener('scroll', updateActiveNavLink);
+
 
