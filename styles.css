@@ -569,6 +569,23 @@ a, button, .btn, input, textarea, select, .nav-menu a, .logo-img {
     gap: 1.5rem;
 }
 
+.contact-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.form-status {
+    min-height: 1.25rem;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.form-hint {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
 .form-group {
     display: flex;
     flex-direction: column;
@@ -752,4 +769,5 @@ a, button, .btn, input, textarea, select, .nav-menu a, .logo-img {
 .engagement-item {
     animation: fadeInUp 0.6s ease-out;
 }
+
 
