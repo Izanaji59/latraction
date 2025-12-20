@@ -292,15 +292,21 @@
                                 <option value="chantier">Fin de chantier</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                             <div class="form-group">
                             <label for="message">Message *</label>
                             <textarea id="message" name="message" rows="5" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Envoyer la demande</button>
+                        <div id="submissionStatus" class="form-status" role="status" aria-live="polite"></div>
+                        <div class="contact-actions">
+                            <button type="submit" class="btn btn-primary">Envoyer la demande</button>
+                            <button type="button" id="exportSubmissions" class="btn btn-secondary">Exporter l'historique (CSV)</button>
+                        </div>
+                        <p class="form-hint">Les demandes sont conservées dans votre navigateur et exportables en CSV pour constituer votre classeur.</p>
                     </form>
                 </div>
             </div>
         </div>
+    </section>
     </section>
 
     <!-- Footer -->
@@ -335,5 +341,6 @@
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
