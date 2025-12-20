@@ -66,18 +66,8 @@ window.addEventListener('scroll', () => {
 // Form submission handler
 const contactForm = document.getElementById('contactForm');
 const submissionStatus = document.getElementById('submissionStatus');
-const exportButton = document.getElementById('exportSubmissions');
 
-function loadSubmissions() {
-    const stored = localStorage.getItem('contactSubmissions');
-    return stored ? JSON.parse(stored) : [];
-}
 
-function saveSubmission(entry) {
-    const submissions = loadSubmissions();
-    submissions.push(entry);
-    localStorage.setItem('contactSubmissions', JSON.stringify(submissions));
-}
 
 function setStatus(message, isError = false) {
     if (!submissionStatus) return;
@@ -85,12 +75,7 @@ function setStatus(message, isError = false) {
     submissionStatus.style.color = isError ? 'var(--danger, #b00020)' : 'var(--primary-color)';
 }
 
-function exportSubmissionsToCSV() {
-    const submissions = loadSubmissions();
-    if (!submissions.length) {
-        setStatus('Aucune demande à exporter pour le moment.', true);
-        return;
-    }
+
 
     const headers = ['Date', 'Nom', 'Email', 'Téléphone', 'Prestation', 'Message'];
     const rows = submissions.map(({ date, name, email, phone, service, message }) => [
@@ -118,27 +103,9 @@ function exportSubmissionsToCSV() {
     setStatus('Export CSV généré depuis les demandes stockées localement.');
 }
 
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
 
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-        const submission = {
-            ...data,
-            date: new Date().toLocaleString()
-        };
 
-        saveSubmission(submission);
-        console.log('Demande enregistrée localement:', submission);
-        setStatus('Demande enregistrée. Vous pouvez exporter le CSV pour votre classeur.');
-        this.reset();
-    });
-}
 
-if (exportButton) {
-    exportButton.addEventListener('click', exportSubmissionsToCSV);
-}
 // Intersection Observer for fade-in animations
 const observerOptions = {
     threshold: 0.1,
@@ -190,5 +157,6 @@ function updateActiveNavLink() {
 }
 
 window.addEventListener('scroll', updateActiveNavLink);
+
 
 
