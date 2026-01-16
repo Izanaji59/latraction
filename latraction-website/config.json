@@ -1,0 +1,62 @@
+{
+  "site": {
+    "name": "LATRACTION",
+    "title": "LATRACTION - Nettoyage Professionnel",
+    "description": "LATRACTION - Nettoyage professionnel polyvalent et écoresponsable. Bureaux, commerces, restaurants, Airbnb, copropriétés et fin de chantier.",
+    "url": "https://latraction.net",
+    "logo": "images/testing123-removebg-preview.png"
+  },
+  "contact": {
+    "phone": "07 83 41 65 11",
+    "phoneLink": "0783416511",
+    "email": "latraction.inc@gmail.com",
+    "zone": "Lille/Nord"
+  },
+  "navigation": [
+    {
+      "label": "Accueil",
+      "href": "/",
+      "id": "accueil"
+    },
+    {
+      "label": "Prestations",
+      "href": "/prestations",
+      "id": "prestations"
+    },
+    {
+      "label": "Fin de Chantier",
+      "href": "/chantier",
+      "id": "chantier"
+    },
+    {
+      "label": "Tarifs",
+      "href": "/tarifs",
+      "id": "tarifs"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact",
+      "id": "contact"
+    }
+  ],
+  "database": {
+    "type": "mysql",
+    "host": "localhost",
+    "name": "latraction_db",
+    "charset": "utf8mb4",
+    "tables": {
+      "pages": "pages",
+      "prestations": "prestations",
+      "contacts": "contacts",
+      "tarifs": "tarifs"
+    }
+  },
+  "api": {
+    "endpoint": "/api",
+    "version": "v1"
+  }
+}
+
+
+
+

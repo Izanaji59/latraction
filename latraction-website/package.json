@@ -1,0 +1,29 @@
+{
+  "name": "latraction-website",
+  "version": "1.0.0",
+  "description": "Site web LATRACTION - Nettoyage Professionnel",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js --watch",
+    "deploy": "npm run build && git add . && git commit -m 'Deploy' && git push"
+  },
+  "keywords": [
+    "nettoyage",
+    "professionnel",
+    "latraction"
+  ],
+  "author": "LATRACTION",
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^1.0.0"
+  },
+  "devDependencies": {
+    "fs-extra": "^11.1.1"
+  }
+}
+
+
+
+
+
+

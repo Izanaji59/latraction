@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LATRACTION - Music : Prods, Mix, Master, Records, figurations styliste, achats de stream. Paris et Lille.">
+    <title>Music - LATRACTION | Production, Mix, Master, Records</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body data-hub="digital">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <a href="/nettoyage-professionnel/">
+                        <img src="/images/test.png" alt="LATRACTION - Services Digitaux" class="logo-img">
+                    </a>
+                    <div class="logo-text">
+                        <h1>LATRACTION</h1>
+                        <span class="tagline">Music</span>
+                    </div>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#prestations">Services</a></li>
+                    <li><a href="#zones">Zones</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Music<br><span class="highlight">Production & Mastering</span></h1>
+                <p class="hero-subtitle">Prods, Mix, Master, Records, figurations styliste, achats de stream. Services music professionnels à Paris et Lille.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">Demander un devis</a>
+                    <a href="#prestations" class="btn btn-secondary">Nos services</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+    </section>
+
+    <!-- Prestations -->
+    <section id="prestations" class="prestations">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nos Music</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="prestations-grid">
+                <div class="prestation-card">
+                    <div class="card-icon">🎹</div>
+                    <h3>Production</h3>
+                    <p>Production musicale professionnelle pour vos projets. Création de beats et compositions sur mesure.</p>
+                </div>
+                <div class="prestation-card">
+                    <div class="card-icon">🎚️</div>
+                    <h3>Mix</h3>
+                    <p>Mixage professionnel de vos enregistrements pour un rendu optimal et professionnel.</p>
+                </div>
+                <div class="prestation-card">
+                    <div class="card-icon">🎧</div>
+                    <h3>Master</h3>
+                    <p>Mastering de qualité studio pour finaliser vos productions et optimiser le rendu final.</p>
+                </div>
+                <div class="prestation-card">
+                    <div class="card-icon">💿</div>
+                    <h3>Records</h3>
+                    <p>Enregistrement professionnel dans nos studios à Paris et Lille pour vos projets musicaux.</p>
+                </div>
+                <div class="prestation-card">
+                    <div class="card-icon">👔</div>
+                    <h3>Figurations Styliste</h3>
+                    <p>Services de figuration et stylisme pour vos projets musicaux et clips vidéo.</p>
+                </div>
+                <div class="prestation-card">
+                    <div class="card-icon">📈</div>
+                    <h3>Achats de Stream</h3>
+                    <p>Services d'achat de streams pour booster la visibilité de vos productions musicales.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zones d'intervention avec carte -->
+    <section id="zones" class="chantier">
+        <div class="container">
+            <div class="section-header">
+                <h2>Zones d'Intervention & Studios</h2>
+                <div class="underline"></div>
+            </div>
+            <p class="chantier-intro" style="text-align: center; margin-bottom: 2rem;">
+                Découvrez nos studios partenaires sur la carte. Cliquez sur un marqueur pour plus d'informations.
+            </p>
+            
+            <!-- Carte des studios -->
+            <div id="studios-map" style="height: 500px; width: 100%; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-lg); margin-bottom: 3rem;"></div>
+            
+            <!-- Bouton de réservation -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn btn-primary" onclick="openReservationModal()" style="font-size: 1.2rem; padding: 1rem 2.5rem;">
+                    🎵 Commander un studio
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de confirmation -->
+    <div id="confirmationModal" class="reservation-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeConfirmationModal()">&times;</span>
+            <h2>Confirmer votre réservation</h2>
+            <div id="reservation-summary" class="reservation-summary">
+                <!-- Le récapitulatif sera injecté ici -->
+            </div>
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="button" class="btn btn-secondary" onclick="closeConfirmationModal()" style="flex: 1;">Modifier</button>
+                <button type="button" class="btn btn-primary" onclick="confirmReservation()" style="flex: 1;">Confirmer et envoyer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay de pixelisation -->
+    <div id="pixelOverlay" class="pixel-overlay">
+        <div class="pixel-grid"></div>
+    </div>
+
+    <!-- Modal de réservation -->
+    <div id="reservationModal" class="reservation-modal">
+        <div class="modal-content pixel-reveal">
+            <span class="modal-close">&times;</span>
+            <h2>Réserver un studio</h2>
+            <form id="reservationForm">
+                <div class="form-group">
+                    <label for="studio-select">Studio *</label>
+                    <select id="studio-select" name="studio" required>
+                        <option value="">Sélectionnez un studio</option>
+                        <option value="ice-stud">Ice Stud - Lille</option>
+                        <option value="gonne-studio">Gonne Studio - Marcq-en-Barœul</option>
+                        <option value="costa-records">Costa Records - Vieux Lille</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reservation-date">Date *</label>
+                    <input type="date" id="reservation-date" name="date" required min="">
+                </div>
+                <div class="form-group">
+                    <label for="reservation-time">Heure *</label>
+                    <select id="reservation-time" name="time" required>
+                        <option value="">Sélectionnez une heure</option>
+                        <option value="08:00">8h</option>
+                        <option value="09:00">9h</option>
+                        <option value="10:00">10h</option>
+                        <option value="11:00">11h</option>
+                        <option value="12:00">12h</option>
+                        <option value="13:00">13h</option>
+                        <option value="14:00">14h</option>
+                        <option value="15:00">15h</option>
+                        <option value="16:00">16h</option>
+                        <option value="17:00">17h</option>
+                        <option value="18:00">18h</option>
+                        <option value="19:00">19h</option>
+                        <option value="20:00">20h</option>
+                        <option value="21:00">21h</option>
+                        <option value="22:00">22h</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reservation-duration">Durée *</label>
+                    <select id="reservation-duration" name="duration" required>
+                        <option value="">Sélectionnez</option>
+                        <option value="2">2 heures</option>
+                        <option value="4">4 heures</option>
+                        <option value="8">8 heures (journée)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reservation-service">Service *</label>
+                    <select id="reservation-service" name="service" required>
+                        <option value="">Sélectionnez</option>
+                        <option value="mix">Mix</option>
+                        <option value="master">Master</option>
+                        <option value="records">Records</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reservation-name">Nom complet *</label>
+                    <input type="text" id="reservation-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="reservation-email">Email *</label>
+                    <input type="email" id="reservation-email" name="email" required placeholder="exemple@email.com">
+                    <span class="field-error" id="email-error" style="display: none; color: #dc2626; font-size: 0.875rem; margin-top: 0.25rem;">Format d'email invalide</span>
+                </div>
+                <div class="form-group">
+                    <label for="reservation-phone">Téléphone *</label>
+                    <input type="tel" id="reservation-phone" name="phone" required placeholder="06 12 34 56 78">
+                    <span class="field-error" id="phone-error" style="display: none; color: #dc2626; font-size: 0.875rem; margin-top: 0.25rem;">Format : 10 chiffres (ex: 0612345678)</span>
+                </div>
+                <button type="submit" class="btn btn-primary">Envoyer la demande de réservation</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notifications toast -->
+    <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 3000; display: flex; flex-direction: column; gap: 1rem;"></div>
+    
+    <!-- Indicateur de chargement -->
+    <div id="loading-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 3001; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 2rem; border-radius: 12px; text-align: center;">
+            <div class="spinner" style="border: 4px solid #f3f3f3; border-top: 4px solid var(--primary-color); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 1rem;"></div>
+            <p style="color: var(--text-dark); font-weight: 500;">Envoi en cours...</p>
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contactez-nous</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div>
+                            <h3>Téléphone</h3>
+                            <p><a href="tel:0783416511">07 83 41 65 11</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div>
+                            <h3>Email</h3>
+                            <p><a href="mailto:latraction.inc@gmail.com">latraction.inc@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div>
+                            <h3>Zones</h3>
+                            <p>Paris & Lille</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm" netlify>
+                        <div class="form-group">
+                            <label for="name">Nom complet *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Téléphone</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Type de service</label>
+                            <select id="service" name="service">
+                                <option value="">Sélectionnez un service</option>
+                                <option value="prods">Prods/Instrus</option>
+                                <option value="mix">Mix</option>
+                                <option value="master">Master</option>
+                                <option value="records">Records</option>
+                                <option value="figuration">Figurations styliste</option>
+                                <option value="streams">Achats de stream</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer la demande</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Découvrir aussi -->
+    <section class="discover-hubs">
+        <div class="container">
+            <div class="section-header">
+                <h2>Découvrir aussi</h2>
+                <div class="underline"></div>
+            </div>
+            <div class="hubs-cta-grid">
+                <div class="hub-cta-card">
+                    <div class="hub-cta-icon">🎨</div>
+                    <h3>Graphismes</h3>
+                    <p>Photos, montage vidéo, covers/visuels partenariats, webdesign, façade de boutique.</p>
+                    <a href="/services-digitaux/graphismes/" class="btn btn-primary">Découvrir</a>
+                </div>
+                <div class="hub-cta-card">
+                    <div class="hub-cta-icon">💻</div>
+                    <h3>Services Digitaux</h3>
+                    <p>Sites web, webdesign, marketing digital, SEA, SEO, chatbots et bien plus encore.</p>
+                    <a href="/services-digitaux/" class="btn btn-primary">Découvrir</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>LATRACTION</h3>
+                    <p>Music professionnel</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Nos Services</h4>
+                    <ul>
+                        <li><a href="/nettoyage-professionnel/">Nettoyage Professionnel</a></li>
+                        <li><a href="/services-digitaux/">Services Digitaux</a></li>
+                        <li><a href="/fiduciaire/">Fiduciaire</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>📞 <a href="tel:0783416511">07 83 41 65 11</a></p>
+                    <p>✉️ <a href="mailto:latraction.inc@gmail.com">latraction.inc@gmail.com</a></p>
+                    <p>📍 60 rue François 1er, 75008 Paris</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 LATRACTION. Tous droits réservés. | 
+                <a href="/mentions-legales/" style="color: rgba(255, 255, 255, 0.8); text-decoration: none;">Mentions Légales</a> | 
+                <a href="/politique-confidentialite/" style="color: rgba(255, 255, 255, 0.8); text-decoration: none;">Politique de Confidentialité</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script src="../../script.js"></script>
+    <script>
+        // Initialiser la carte
+        let map;
+        let markers = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser la carte centrée sur Lille
+            map = L.map('studios-map').setView([50.6292, 3.0573], 12);
+            
+            // Ajouter la couche OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Coordonnées des studios
+            const studios = [
+                {
+                    id: 'ice-stud',
+                    name: 'Ice Stud',
+                    lat: 50.6292,
+                    lng: 3.0573,
+                    address: 'Lille',
+                    services: 'Production, Mix, Master, Records'
+                },
+                {
+                    id: 'gonne-studio',
+                    name: 'Gonne Studio',
+                    lat: 50.6700,
+                    lng: 3.1000,
+                    address: 'Marcq-en-Barœul',
+                    services: 'Production, Mix, Master, Records'
+                },
+                {
+                    id: 'costa-records',
+                    name: 'Costa Records',
+                    lat: 50.6400,
+                    lng: 3.0600,
+                    address: 'Vieux Lille',
+                    services: 'Production, Mix, Master, Records'
+                }
+            ];
+            
+            // Ajouter les marqueurs
+            studios.forEach(studio => {
+                const marker = L.marker([studio.lat, studio.lng])
+                    .addTo(map)
+                    .bindPopup(`
+                        <strong>${studio.name}</strong><br>
+                        📍 ${studio.address}<br>
+                        ${studio.services}
+                    `)
+                    .on('click', function() {
+                        // Centrer la carte sur le studio
+                        map.setView([studio.lat, studio.lng], 14);
+                        // Ouvrir le modal avec le studio pré-sélectionné
+                        openReservationModal(studio.id);
+                    });
+                
+                markers.push(marker);
+            });
+            
+            // Fermer le modal avec le bouton X
+            const closeBtn = document.querySelector('#reservationModal .modal-close');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    closeReservationModal();
+                });
+            }
+            
+            // Fermer en cliquant sur l'overlay (partie extérieure)
+            const pixelOverlay = document.getElementById('pixelOverlay');
+            if (pixelOverlay) {
+                pixelOverlay.addEventListener('click', function(event) {
+                    // Ne fermer que si on clique directement sur l'overlay, pas sur le modal
+                    if (event.target === pixelOverlay || event.target.classList.contains('pixel-grid')) {
+                        closeReservationModal();
+                    }
+                });
+            }
+            
+            // Empêcher la fermeture en cliquant sur le contenu du modal
+            const modalContent = document.querySelector('#reservationModal .modal-content');
+            if (modalContent) {
+                modalContent.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            }
+            
+            // Initialiser la date minimale (aujourd'hui)
+            const dateInput = document.getElementById('reservation-date');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.setAttribute('min', today);
+            }
+            
+            // Restaurer les données depuis localStorage
+            restoreFormData();
+            
+            // Validation email en temps réel
+            const emailInput = document.getElementById('reservation-email');
+            const emailError = document.getElementById('email-error');
+            if (emailInput && emailError) {
+                emailInput.addEventListener('blur', function() {
+                    validateEmail(this.value, emailError, this);
+                    saveFormData();
+                });
+                emailInput.addEventListener('input', function() {
+                    if (this.value && !validateEmail(this.value, null, this)) {
+                        emailError.style.display = 'block';
+                        this.style.borderColor = '#dc2626';
+                    } else {
+                        emailError.style.display = 'none';
+                        this.style.borderColor = '';
+                    }
+                });
+            }
+            
+            // Validation téléphone en temps réel (format simple)
+            const phoneInput = document.getElementById('reservation-phone');
+            const phoneError = document.getElementById('phone-error');
+            if (phoneInput && phoneError) {
+                phoneInput.addEventListener('input', function() {
+                    // Formater simplement avec espaces tous les 2 chiffres
+                    let value = this.value.replace(/\D/g, ''); // Garder seulement les chiffres
+                    if (value.length > 10) value = value.substring(0, 10); // Limiter à 10 chiffres
+                    
+                    // Formater avec espaces : XX XX XX XX XX
+                    if (value.length > 0) {
+                        const formatted = value.match(/.{1,2}/g)?.join(' ') || value;
+                        this.value = formatted;
+                    }
+                    
+                    const isValid = validatePhone(this.value);
+                    if (this.value && !isValid) {
+                        phoneError.style.display = 'block';
+                        this.style.borderColor = '#dc2626';
+                    } else {
+                        phoneError.style.display = 'none';
+                        this.style.borderColor = '';
+                    }
+                    saveFormData();
+                });
+                phoneInput.addEventListener('blur', function() {
+                    validatePhone(this.value, phoneError, this);
+                    saveFormData();
+                });
+            }
+            
+            // Sauvegarder les données à chaque changement
+            const formInputs = document.querySelectorAll('#reservationForm input, #reservationForm select');
+            formInputs.forEach(input => {
+                input.addEventListener('change', saveFormData);
+                input.addEventListener('input', function() {
+                    if (this.type !== 'email' && this.type !== 'tel') {
+                        saveFormData();
+                    }
+                });
+            });
+            
+            // Gérer le formulaire de réservation
+            const reservationForm = document.getElementById('reservationForm');
+            if (reservationForm) {
+                reservationForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Valider tous les champs avant de continuer
+                    if (!validateAllFields()) {
+                        return;
+                    }
+                    
+                    // Fermer immédiatement l'interface de réservation avant la confirmation
+                    forceCloseReservationUI();
+                    showConfirmationModal();
+                });
+            }
+        });
+        
+        // Fonction de validation email
+        function validateEmail(email, errorElement, inputElement) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isValid = emailRegex.test(email);
+            
+            if (errorElement) {
+                errorElement.style.display = isValid ? 'none' : 'block';
+            }
+            if (inputElement) {
+                inputElement.style.borderColor = isValid ? '#10b981' : '#dc2626';
+            }
+            
+            return isValid;
+        }
+        
+        // Fonction de validation téléphone (format simple : 10 chiffres)
+        function validatePhone(phone, errorElement, inputElement) {
+            // Nettoyer le numéro (supprimer espaces)
+            const cleaned = phone.replace(/\s/g, '');
+            // Regex: 10 chiffres commençant par 0
+            const phoneRegex = /^0[1-9]\d{8}$/;
+            const isValid = phoneRegex.test(cleaned);
+            
+            if (errorElement) {
+                errorElement.style.display = isValid ? 'none' : 'block';
+            }
+            if (inputElement) {
+                inputElement.style.borderColor = isValid ? '#10b981' : '#dc2626';
+            }
+            
+            return isValid;
+        }
+        
+        // Fonction de validation complète de tous les champs
+        function validateAllFields() {
+            const emailInput = document.getElementById('reservation-email');
+            const phoneInput = document.getElementById('reservation-phone');
+            const emailError = document.getElementById('email-error');
+            const phoneError = document.getElementById('phone-error');
+            
+            let isValid = true;
+            
+            // Valider email
+            if (emailInput && !validateEmail(emailInput.value, emailError, emailInput)) {
+                isValid = false;
+            }
+            
+            // Valider téléphone
+            if (phoneInput && !validatePhone(phoneInput.value, phoneError, phoneInput)) {
+                isValid = false;
+            }
+            
+            // Valider que tous les champs requis sont remplis
+            const requiredFields = document.querySelectorAll('#reservationForm [required]');
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#dc2626';
+                } else {
+                    field.style.borderColor = '';
+                }
+            });
+            
+            return isValid;
+        }
+        
+        // Fonction de sauvegarde dans localStorage
+        function saveFormData() {
+            const form = document.getElementById('reservationForm');
+            if (!form) return;
+            
+            const formData = {
+                studio: document.getElementById('studio-select')?.value || '',
+                date: document.getElementById('reservation-date')?.value || '',
+                time: document.getElementById('reservation-time')?.value || '',
+                duration: document.getElementById('reservation-duration')?.value || '',
+                service: document.getElementById('reservation-service')?.value || '',
+                name: document.getElementById('reservation-name')?.value || '',
+                email: document.getElementById('reservation-email')?.value || '',
+                phone: document.getElementById('reservation-phone')?.value || ''
+            };
+            
+            localStorage.setItem('reservationFormData', JSON.stringify(formData));
+        }
+        
+        // Fonction de restauration depuis localStorage
+        function restoreFormData() {
+            const savedData = localStorage.getItem('reservationFormData');
+            if (!savedData) return;
+            
+            try {
+                const formData = JSON.parse(savedData);
+                
+                if (formData.studio) document.getElementById('studio-select').value = formData.studio;
+                if (formData.date) document.getElementById('reservation-date').value = formData.date;
+                if (formData.time) document.getElementById('reservation-time').value = formData.time;
+                if (formData.duration) document.getElementById('reservation-duration').value = formData.duration;
+                if (formData.service) document.getElementById('reservation-service').value = formData.service;
+                if (formData.name) document.getElementById('reservation-name').value = formData.name;
+                if (formData.email) document.getElementById('reservation-email').value = formData.email;
+                if (formData.phone) document.getElementById('reservation-phone').value = formData.phone;
+            } catch (e) {
+                console.error('Erreur lors de la restauration des données:', e);
+            }
+        }
+        
+        // Fermeture "hard" de l'interface de réservation (immédiat, sans animation)
+        function forceCloseReservationUI() {
+            const reservationModal = document.getElementById('reservationModal');
+            const pixelOverlay = document.getElementById('pixelOverlay');
+
+            if (reservationModal) {
+                reservationModal.style.display = 'none';
+                reservationModal.classList.remove('active');
+            }
+            if (pixelOverlay) {
+                pixelOverlay.style.display = 'none';
+                pixelOverlay.classList.remove('active', 'closing');
+            }
+            document.body.style.overflow = '';
+        }
+
+        // Fonction pour ouvrir le modal de réservation avec effet de pixelisation
+        function openReservationModal(studioId) {
+            const modal = document.getElementById('reservationModal');
+            const pixelOverlay = document.getElementById('pixelOverlay');
+            const studioSelect = document.getElementById('studio-select');
+            
+            if (modal && pixelOverlay) {
+                // Si un studioId est fourni, pré-sélectionner le studio
+                if (studioId && studioSelect) {
+                    studioSelect.value = studioId;
+                }
+                
+                // Afficher l'overlay de pixelisation
+                pixelOverlay.classList.remove('closing');
+                pixelOverlay.classList.add('active');
+                
+                // Afficher le modal après un court délai pour l'effet
+                setTimeout(() => {
+                    modal.style.display = 'block';
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Empêcher le scroll
+                }, 100);
+            }
+        }
+        
+        // Fonction pour fermer le modal avec effet de pixelisation
+        function closeReservationModal() {
+            const modal = document.getElementById('reservationModal');
+            const pixelOverlay = document.getElementById('pixelOverlay');
+            
+            if (modal && pixelOverlay) {
+                // Animation de fermeture
+                pixelOverlay.classList.add('closing');
+                modal.classList.remove('active');
+                
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    pixelOverlay.classList.remove('active', 'closing');
+                    document.body.style.overflow = ''; // Réactiver le scroll
+                }, 400);
+            }
+        }
+        
+        // Fonction pour afficher le modal de confirmation
+        function showConfirmationModal() {
+            const form = document.getElementById('reservationForm');
+            const confirmationModal = document.getElementById('confirmationModal');
+            const summaryDiv = document.getElementById('reservation-summary');
+
+            // Sécurité : s'assurer que l'UI de réservation est fermée
+            forceCloseReservationUI();
+            
+            // Récupérer les valeurs du formulaire
+            const studioSelect = document.getElementById('studio-select');
+            const date = document.getElementById('reservation-date').value;
+            const time = document.getElementById('reservation-time').value;
+            const duration = document.getElementById('reservation-duration').value;
+            const service = document.getElementById('reservation-service').value;
+            const name = document.getElementById('reservation-name').value;
+            const email = document.getElementById('reservation-email').value;
+            const phone = document.getElementById('reservation-phone').value;
+            
+            // Mapper les valeurs pour l'affichage
+            const studioNames = {
+                'ice-stud': 'Ice Stud - Lille',
+                'gonne-studio': 'Gonne Studio - Marcq-en-Barœul',
+                'costa-records': 'Costa Records - Vieux Lille'
+            };
+            
+            const serviceNames = {
+                'mix': 'Mix',
+                'master': 'Master',
+                'records': 'Records'
+            };
+            
+            const durationNames = {
+                '2': '2 heures',
+                '4': '4 heures',
+                '8': '8 heures (journée)'
+            };
+            
+            // Formater la date
+            let formattedDate = date;
+            if (date) {
+                const dateObj = new Date(date + 'T00:00:00'); // Ajouter l'heure pour éviter les problèmes de fuseau horaire
+                formattedDate = dateObj.toLocaleDateString('fr-FR', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+            }
+            
+            // Créer le récapitulatif
+            summaryDiv.innerHTML = `
+                <div class="summary-item">
+                    <strong>Studio :</strong> ${studioNames[studioSelect.value] || studioSelect.value}
+                </div>
+                <div class="summary-item">
+                    <strong>Date :</strong> ${formattedDate}
+                </div>
+                <div class="summary-item">
+                    <strong>Heure :</strong> ${time}
+                </div>
+                <div class="summary-item">
+                    <strong>Durée :</strong> ${durationNames[duration] || duration}
+                </div>
+                <div class="summary-item">
+                    <strong>Service :</strong> ${serviceNames[service] || service}
+                </div>
+                <div class="summary-item">
+                    <strong>Nom :</strong> ${name}
+                </div>
+                <div class="summary-item">
+                    <strong>Email :</strong> ${email}
+                </div>
+                <div class="summary-item">
+                    <strong>Téléphone :</strong> ${phone}
+                </div>
+            `;
+            
+            // Afficher le modal de confirmation
+            confirmationModal.style.display = 'block';
+        }
+        
+        // Fonction pour fermer le modal de confirmation
+        function closeConfirmationModal() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        }
+        
+        // Fonction pour confirmer et envoyer la réservation
+        function confirmReservation() {
+            const form = document.getElementById('reservationForm');
+            const confirmationModal = document.getElementById('confirmationModal');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            
+            // Afficher l'indicateur de chargement
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'flex';
+            }
+            
+            // Simuler l'envoi (remplacer par un vrai appel API)
+            setTimeout(() => {
+                // Ici vous pouvez ajouter l'envoi réel du formulaire (Web3Forms, Formspree, etc.)
+                
+                // Cacher l'indicateur de chargement
+                if (loadingOverlay) {
+                    loadingOverlay.style.display = 'none';
+                }
+                
+                // Afficher notification de succès
+                showToast('Demande de réservation envoyée ! Nous vous contacterons sous 24h pour confirmer.', 'success');
+                
+                // Fermer les modals
+                confirmationModal.style.display = 'none';
+                
+                // Nettoyer localStorage et réinitialiser le formulaire
+                localStorage.removeItem('reservationFormData');
+                if (form) {
+                    form.reset();
+                }
+            }, 1500); // Simuler un délai d'envoi
+        }
+        
+        // Fonction pour afficher des notifications toast
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.style.cssText = `
+                background: ${type === 'success' ? '#10b981' : type === 'error' ? '#dc2626' : '#2563eb'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: var(--shadow-lg);
+                min-width: 300px;
+                max-width: 500px;
+                animation: slideInRight 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            `;
+            
+            const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+            toast.innerHTML = `
+                <span style="font-size: 1.25rem; font-weight: bold;">${icon}</span>
+                <span style="flex: 1;">${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Retirer après 5 secondes
+            setTimeout(() => {
+                toast.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, 5000);
+        }
+        
+        // Fermer le modal de confirmation en cliquant en dehors
+        const confirmationModal = document.getElementById('confirmationModal');
+        if (confirmationModal) {
+            confirmationModal.addEventListener('click', function(event) {
+                if (event.target === confirmationModal) {
+                    confirmationModal.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

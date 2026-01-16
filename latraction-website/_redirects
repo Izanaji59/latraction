@@ -1,0 +1,19 @@
+# Redirections Netlify pour LATRACTION
+# Ce fichier est utilisé par Netlify pour gérer les redirections
+
+# Redirection des pages principales (SPA routing)
+/nettoyage-professionnel /nettoyage-professionnel/index.html 200
+/services-digitaux /services-digitaux/index.html 200
+/services-digitaux/music /services-digitaux/music/index.html 200
+/services-digitaux/graphismes /services-digitaux/graphismes/index.html 200
+/fiduciaire /fiduciaire/index.html 200
+/politique-confidentialite /politique-confidentialite/index.html 200
+/mentions-legales /mentions-legales/index.html 200
+
+# Redirection 404 vers la page d'accueil (optionnel)
+/* /index.html 200
+
+
+
+
+

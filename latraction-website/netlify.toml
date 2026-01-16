@@ -1,0 +1,51 @@
+# Configuration Netlify pour LATRACTION
+# Documentation: https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  # Dossier de publication (racine du projet)
+  publish = "."
+  
+  # Commande de build (optionnel, pas nécessaire pour site statique)
+  # command = ""
+
+# Redirections et réécritures
+[[redirects]]
+  # Rediriger toutes les routes vers index.html pour le routing SPA
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
+# Headers de sécurité
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Headers pour les assets statiques (cache)
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Configuration des formulaires Netlify
+# Les formulaires avec l'attribut 'netlify' seront automatiquement détectés
+# Les soumissions seront disponibles dans le dashboard Netlify > Forms
+
+
+
+
+
