@@ -160,56 +160,38 @@ window.addEventListener('scroll', () => {
 });
 
 // Form submission handler
+
 const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
     contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
-        // Désactiver le bouton pour éviter les soumissions multiples
         const submitButton = this.querySelector('button[type="submit"]');
         const originalButtonText = submitButton.textContent;
         submitButton.disabled = true;
         submitButton.textContent = 'Envoi en cours...';
-        
+
         try {
-            // Récupérer les données du formulaire
-            const formData = new FormData(this);
-            
-            // Convertir FormData en URLSearchParams
-            const params = new URLSearchParams();
-            for (const [key, value] of formData.entries()) {
-                params.append(key, value);
-            }
-            
-            // Envoyer les données à la Netlify Function (qui sauvegarde dans Neon)
-            const response = await fetch('/.netlify/functions/submit-form', {
+            const formData = new URLSearchParams(new FormData(this));
+            const response = await fetch('/', {
                 method: 'POST',
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: params.toString()
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData.toString()
             });
-            
-            const result = await response.json();
-            
-            if (result.success) {
-                // Afficher un message de succès
-                showNotification(result.message || 'Votre demande a été enregistrée avec succès. Nous vous contacterons sous 24h.', 'success');
-                // Réinitialiser le formulaire
+            if (response.ok) {
+                showNotification('Votre demande a été envoyée ! Nous vous répondons sous 24h.', 'success');
                 this.reset();
             } else {
-                throw new Error(result.message || 'Une erreur est survenue');
+                throw new Error('Erreur serveur');
             }
         } catch (error) {
-            console.error('Erreur lors de l\'envoi du formulaire:', error);
-            showNotification('Une erreur est survenue lors de l\'envoi du formulaire. Veuillez réessayer plus tard.', 'error');
+            showNotification('Erreur lors de l\'envoi. Veuillez réessayer.', 'error');
         } finally {
-            // Réactiver le bouton
             submitButton.disabled = false;
             submitButton.textContent = originalButtonText;
         }
     });
 }
-
 // Fonction pour afficher les notifications
 function showNotification(message, type = 'info') {
     // Créer l'élément de notification s'il n'existe pas
